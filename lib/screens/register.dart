@@ -1,3 +1,4 @@
+import 'package:croco/screens/verifikasi.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -68,7 +69,10 @@ class _RegisterState extends State<Register> {
         backgroundColor: Colors.teal,
         title: const Text("Register Page"),
         titleTextStyle: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 24,
+        ),
       ),
       body: Center(
         child: Padding(
@@ -159,7 +163,6 @@ class _RegisterState extends State<Register> {
                       },
                       activeColor: Colors.teal,
                     ),
-                    const SizedBox(height: 5),
                     RadioListTile<String>(
                       title: const Text("Female"),
                       value: "Female",
@@ -220,7 +223,56 @@ class _RegisterState extends State<Register> {
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
                             onPressed: () {
-                              debugPrint("Terms & Conditions pressed");
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text("Terms & Conditions"),
+                                    content: SizedBox(
+                                      width: double.maxFinite,
+                                      height: 400,
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: const [
+                                            Text(
+                                              "Selamat datang di Crocolattefit!",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            SizedBox(height: 10),
+                                            Text(
+                                              "Dengan mendaftar, Anda menyetujui syarat dan ketentuan berikut:\n",
+                                              style: TextStyle(fontSize: 14),
+                                            ),
+                                            Text(
+                                              "1. Aplikasi ini hanya untuk tujuan pribadi dan kebugaran.\n"
+                                              "2. Pengguna bertanggung jawab atas data dan informasi yang dimasukkan.\n"
+                                              "3. Data pribadi Anda akan dikelola dengan aman sesuai kebijakan privasi kami.\n"
+                                              "4. Jangan gunakan aplikasi ini untuk aktivitas ilegal atau merugikan.\n"
+                                              "5. Kami dapat memperbarui syarat ini kapan saja tanpa pemberitahuan.\n"
+                                              "6. Penggunaan terus-menerus berarti Anda setuju dengan versi terbaru dari syarat ini.\n\n"
+                                              "Dengan melanjutkan pendaftaran, Anda menyatakan telah membaca dan menyetujui semua ketentuan di atas.",
+                                              style: TextStyle(fontSize: 14),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        child: const Text("Tutup"),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                             },
                             child: const Text(
                               'Terms & Conditions',
@@ -235,7 +287,14 @@ class _RegisterState extends State<Register> {
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: _agreeToTerms
-                      ? () {}
+                      ? () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Verifikasi(),
+                            ),
+                          );
+                        }
                       : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.teal,
