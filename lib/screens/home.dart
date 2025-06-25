@@ -9,13 +9,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final List<Map<String, dynamic>> menuItems = [
-  {'icon': Icons.monitor_weight, 'label': 'Kalkulator BMI'}, // Berat badan
-  {'icon': Icons.local_fire_department, 'label': 'Kalkulator Kebutuhan Kalori'}, // Kalori
-  {'icon': Icons.favorite, 'label': 'Kalkulator Detak Jantung Maksimum'}, // Jantung
-  {'icon': Icons.fitness_center, 'label': 'Kalkulator Lemak Tubuh'}, // Lemak tubuh
-  {'icon': Icons.water_drop, 'label': 'Kalkulator Asupan Air Harian'}, // Air
-  {'icon': Icons.accessibility_new, 'label': 'Kalkulator WHR (Waist-to-Hip Ratio)'}, // Pinggang-pinggul
-];
+    {'icon': Icons.monitor_weight, 'label': 'Kalkulator BMI'},
+    {'icon': Icons.local_fire_department, 'label': 'Kalkulator Kebutuhan Kalori'},
+    {'icon': Icons.favorite, 'label': 'Kalkulator Detak Jantung Maksimum'},
+    {'icon': Icons.fitness_center, 'label': 'Kalkulator Lemak Tubuh'},
+    {'icon': Icons.water_drop, 'label': 'Kalkulator Asupan Air Harian'},
+    {'icon': Icons.accessibility_new, 'label': 'Kalkulator WHR (Waist-to-Hip Ratio)'},
+  ];
 
   List<Map<String, dynamic>> visitPlans = [
     {'title': 'lari jogging 1 jam', 'done': false},
@@ -34,12 +34,37 @@ class _HomeState extends State<Home> {
           fontSize: 26,
         ),
       ),
+
+      drawer: Drawer(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: ListView(
+              children: [
+                _sectionTitle('Schedule kesehatan hari ini'),
+                ...visitPlans
+                    .where((item) => !item['done'])
+                    .map((item) => _visitCard(context, item['title']))
+                    .toList(),
+
+                const SizedBox(height: 20),
+
+                _sectionTitle('Schedule yang sudah selesai hari ini'),
+                ...visitPlans
+                    .where((item) => item['done'])
+                    .map((item) => _doneCard(item['title']))
+                    .toList(),
+              ],
+            ),
+          ),
+        ),
+      ),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
             children: [
-              // Menu Grid
               Card(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                 elevation: 4,
@@ -50,7 +75,7 @@ class _HomeState extends State<Home> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: menuItems.length,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4, // Lebih kecil
+                      crossAxisCount: 4,
                       mainAxisSpacing: 8,
                       crossAxisSpacing: 8,
                       childAspectRatio: 0.9,
@@ -117,8 +142,13 @@ class _HomeState extends State<Home> {
             ),
           ),
           const SizedBox(width: 8),
-          Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          const Spacer(),
+          Expanded(
+            child: Text(
+              title,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
           if (trailing != null)
             Text(
               trailing,
@@ -137,8 +167,13 @@ class _HomeState extends State<Home> {
         padding: const EdgeInsets.all(12.0),
         child: Row(
           children: [
-            Text('Rencana $title', style: const TextStyle(fontSize: 14)),
-            const Spacer(),
+            Expanded(
+              child: Text(
+                'Rencana $title',
+                style: const TextStyle(fontSize: 14),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
             ElevatedButton(
               onPressed: () {
                 setState(() {
@@ -146,7 +181,7 @@ class _HomeState extends State<Home> {
                   if (index != -1) visitPlans[index]['done'] = true;
                 });
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('$title selesai dikunjungi!')),
+                  SnackBar(content: Text('$title selesai dilakukan!')),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -171,8 +206,13 @@ class _HomeState extends State<Home> {
         padding: const EdgeInsets.all(12.0),
         child: Row(
           children: [
-            Text(title, style: const TextStyle(fontSize: 14)),
-            const Spacer(),
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(fontSize: 14),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
             ElevatedButton(
               onPressed: () {
                 setState(() {
@@ -190,23 +230,6 @@ class _HomeState extends State<Home> {
               ),
               child: const Text('Cancel', style: TextStyle(fontSize: 12, color: Colors.white)),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _statCard(String value, String label) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Container(
-        width: 150,
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Text(value, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 4),
-            Text(label, style: const TextStyle(fontSize: 12)),
           ],
         ),
       ),

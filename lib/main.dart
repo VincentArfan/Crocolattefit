@@ -3,6 +3,14 @@ import 'package:croco/screens/News.dart';
 import 'package:croco/screens/bahasa.dart';
 import 'package:croco/screens/early.dart';
 import 'package:croco/screens/home.dart';
+import 'package:croco/screens/profile.dart';
+import 'package:croco/screens/pusarbantuan.dart';
+import 'package:croco/screens/register.dart';
+import 'package:croco/screens/schedule.dart';
+import 'package:croco/screens/settings.dart';
+import 'package:croco/screens/sign.dart';
+import 'package:croco/screens/ubahpassword.dart';
+import 'package:croco/screens/verifikasi.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +36,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: const Bahasa(), 
+      home: Home(), 
     );
   }
 }
