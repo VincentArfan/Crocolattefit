@@ -1,6 +1,8 @@
 import 'package:croco/providers/news_provider.dart';
 import 'package:croco/screens/News.dart';
+import 'package:croco/screens/bahasa.dart';
 import 'package:croco/screens/early.dart';
+import 'package:croco/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: const News(), 
+      home: const Bahasa(), 
     );
   }
 }
