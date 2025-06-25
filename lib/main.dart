@@ -1,8 +1,18 @@
+import 'package:croco/providers/news_provider.dart';
+import 'package:croco/screens/News.dart';
 import 'package:croco/screens/early.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-void main(){
-  runApp(MyApp());
+void main() {
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider (create: (_) => NewsProvider()),
+      ],
+      child: const News(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -10,6 +20,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Register());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'My App',
+      theme: ThemeData(
+        primarySwatch: Colors.teal,
+      ),
+      home: const News(), 
+    );
   }
 }
