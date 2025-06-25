@@ -12,6 +12,20 @@ class _RegisterState extends State<Register> {
   final TextEditingController _dobController = TextEditingController();
   bool _agreeToTerms = false;
   String? _selectedGender;
+  String? _selectedCity;
+
+  final List<String> _cities = [
+    'Jakarta',
+    'Bandung',
+    'Surabaya',
+    'Yogyakarta',
+    'Medan',
+    'Semarang',
+    'Denpasar',
+    'Makassar',
+    'Palembang',
+    'Balikpapan',
+  ];
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -35,8 +49,7 @@ class _RegisterState extends State<Register> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
-        _dobController.text =
-            "${picked.day}/${picked.month}/${picked.year}";
+        _dobController.text = "${picked.day}/${picked.month}/${picked.year}";
       });
     }
   }
@@ -161,6 +174,27 @@ class _RegisterState extends State<Register> {
                   ],
                 ),
                 const SizedBox(height: 10),
+                DropdownButtonFormField<String>(
+                  value: _selectedCity,
+                  decoration: const InputDecoration(
+                    labelText: 'Kota',
+                    border: OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  items: _cities.map((city) {
+                    return DropdownMenuItem<String>(
+                      value: city,
+                      child: Text(city),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedCity = value;
+                    });
+                  },
+                ),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Checkbox(
@@ -201,9 +235,7 @@ class _RegisterState extends State<Register> {
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: _agreeToTerms
-                      ? () {
-                          debugPrint("Registered with gender: $_selectedGender");
-                        }
+                      ? () {}
                       : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.teal,
